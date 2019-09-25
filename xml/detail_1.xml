@@ -48,7 +48,8 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="20dp"
                 android:layout_weight="1"
-                tools:srcCompat="@tools:sample/avatars" />
+                tools:srcCompat="@tools:sample/avatars"
+                android:src="@drawable/ic_image" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -69,10 +70,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginTop="30dp"
-                        android:text="제품
-                    이름"
+                        android:text="제품명"
                         android:gravity="center"
-                        android:textSize="26dp"
+                        android:textSize="20dp"
                         tools:layout_editor_absoluteX="202dp"
                         tools:layout_editor_absoluteY="107dp" />
                     <EditText
@@ -96,9 +96,9 @@
                         android:layout_height="match_parent"
                         android:layout_marginTop="10dp"
                         android:layout_marginBottom="20dp"
-                        android:text="수 량"
+                        android:text="수량"
                         android:gravity="center"
-                        android:textSize="26dp"
+                        android:textSize="20dp"
                         tools:layout_editor_absoluteX="202dp"
                         tools:layout_editor_absoluteY="107dp" />
                     <EditText
@@ -121,10 +121,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginBottom="30dp"
-                        android:text="유통
-                    기한"
+                        android:text="유통기한"
                         android:gravity="center"
-                        android:textSize="26dp"
+                        android:textSize="20dp"
                         tools:layout_editor_absoluteX="202dp"
                         tools:layout_editor_absoluteY="107dp" />
                     <EditText
@@ -159,7 +158,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="구매 링크"
-                android:textSize="28dp"
+                android:textSize="23dp"
                 android:gravity="center"
                 >
             </TextView>
@@ -187,7 +186,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:text="비고"
-                    android:textSize="28dp"
+                    android:textSize="25dp"
                     android:gravity="center">
                 </TextView>
                 <LinearLayout
@@ -206,7 +205,8 @@
                     android:layout_marginRight="20dp"
                     android:gravity="left"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="match_parent"
+                    android:background="@drawable/back">
 
                 </EditText>
             </LinearLayout>
