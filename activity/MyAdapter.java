@@ -6,25 +6,31 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import java.util.*;
 
 import androidx.recyclerview.widget.RecyclerView;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
-    private String[] mDataset;
+    private ArrayList<Student> mDataset = new ArrayList<>();
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView textView_content;
-
+        public TextView print_id;
+        public TextView print_name;
+        public TextView print_age;
+        public TextView print_gender;
         // 배열에 있는 요소의 갯수만큼 반복
         public MyViewHolder(View v) {
             super(v);
-            textView_content = v.findViewById(R.id.content);
+            print_id = v.findViewById(R.id.print_id);
+            print_name = v.findViewById(R.id.print_name);
+            print_age = v.findViewById(R.id.print_age);
+            print_gender = v.findViewById(R.id.print_gender);
         }
     }
 
     // 데이터를 받아온다 배열로
-    public MyAdapter(String[] myDataset) {
-        mDataset = myDataset;
+    public MyAdapter(ArrayList<Student> myDataset) {
+        mDataset=myDataset;
     }
 
     @Override
@@ -42,11 +48,14 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     public void onBindViewHolder(MyViewHolder holder, int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        holder.textView_content.setText(mDataset[position]);
+        holder.print_id.setText(mDataset.get(position).id);
+        holder.print_name.setText(mDataset.get(position).name);
+        holder.print_age.setText(mDataset.get(position).age);
+        holder.print_gender.setText(mDataset.get(position).gender);
     }
 
     // Return the size of your dataset (invoked by the layout manager)
     @Override
-    public int getItemCount() {return mDataset.length;}
+    public int getItemCount() {return mDataset.size();}
 
 }
