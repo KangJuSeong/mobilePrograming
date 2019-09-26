@@ -9,15 +9,30 @@ import android.widget.LinearLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import java.util.*;
+
+class Student{
+    String id;
+    String name;
+    String age;
+    String gender;
+
+    Student(String id,String name,String age,String gender){
+        this.id=id;
+        this.name=name;
+        this.age=age;
+        this.gender=gender;
+    }
+};
 
 public class RecyclerViewMainActivity extends AppCompatActivity{
 
     private RecyclerView recyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
-    private String [] myDataset=new String[50];
-    int itemSize=0;
-    String value;
+    private ArrayList<Student> myDataset=new ArrayList<>();
+    public int itemSize=0;
+    String v_id,v_name,v_age,v_gender;
     private Button addBtn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +52,6 @@ public class RecyclerViewMainActivity extends AppCompatActivity{
                 startActivityForResult(intent,0); //첫 인자는 인텐트 두번쨰 인자는 요청코드 번호
             }
         });
-
     }
 
     @Override
@@ -46,8 +60,11 @@ public class RecyclerViewMainActivity extends AppCompatActivity{
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
                 case 0:
-                    value = data.getStringExtra("key");
-                    myDataset[itemSize++] = value;
+                    v_id = data.getStringExtra("ID");
+                    v_name = data.getStringExtra("NAME");
+                    v_age = data.getStringExtra("AGE");
+                    v_gender = data.getStringExtra("GENDER");
+                    myDataset.add(new Student(v_id,v_name,v_age,v_gender));
                     mAdapter = new MyAdapter(myDataset);
                     recyclerView.setAdapter(mAdapter);
                     break;
