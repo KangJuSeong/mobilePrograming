@@ -3,49 +3,12 @@
     android:orientation="horizontal" android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <Button
-        android:layout_width="80dp"
-        android:layout_height="40dp"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:text="추가"
-        android:background="@color/colorPrimary"
-        android:textColor="#ffffff"
-        android:textSize="18dp"
-        android:id="@+id/addButton"
-        android:layout_marginRight="8dp"
-        android:layout_marginLeft="8dp"/>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:background="@color/colorPrimary">
 
-            <TextView
-                android:id="@+id/courseGrade"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:padding="3dp"
-                android:text="분류"
-                android:textColor="#ffffff" />
-
-            <TextView
-                android:id="@+id/courseTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:padding="3dp"
-                android:text="식품"
-                android:textColor="#ffffff"
-                android:textStyle="bold" />
-        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -58,9 +21,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:padding="3dp"
+                android:padding="5dp"
                 android:text="물품명"
                 android:textColor="#000000"
+                android:textSize="20sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -70,16 +34,18 @@
                 android:layout_gravity="center"
                 android:padding="3dp"
                 android:text="삼다수"
-                android:textColor="#000000" />
+                android:textColor="#000000"
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/courseDivide"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:padding="3dp"
-                android:text="   개수"
+                android:layout_gravity="center|left"
+                android:padding="5dp"
+                android:text="      개수"
                 android:textColor="#000000"
+                android:textSize="20sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -87,9 +53,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:padding="3dp"
+                android:padding="5dp"
                 android:text="5"
-                android:textColor="#000000" />
+                android:textColor="#000000"
+                android:textSize="20sp" />
 
         </LinearLayout>
 
@@ -101,21 +68,22 @@
 
             <TextView
                 android:id="@+id/coursePersonnel"
-                android:layout_width="wrap_content"
+                android:layout_width="84dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:padding="3dp"
                 android:text="유통기한"
-                android:textColor="#f92a3f" />
+                android:textColor="#3F51B5"
+                android:textSize="18sp" />
 
-            <Button
-                android:id="@+id/button2"
-                android:layout_width="80dp"
-                android:layout_height="30dp"
-                android:background="@color/colorPrimary"
-                android:text="달력펼치기"
-                android:textColor="#ffffff"
-                android:textSize="12sp" />
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="3dp"
+                android:text="2019-12-25"
+                android:textSize="18sp" />
         </LinearLayout>
     </LinearLayout>
 
