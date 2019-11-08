@@ -3,8 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.mobileprograming_project.MainActivity">
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/info_button"
         android:orderInCategory="100"
-        android:title="@string/action_settings"
+        android:title="상세정보"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/delete_button"
+        android:orderInCategory="100"
+        android:title="삭제"
         app:showAsAction="never" />
 </menu>

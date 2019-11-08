@@ -1,5 +1,7 @@
 package com.example.mobileprograming_project;
 
+import android.content.Context;
+import android.content.Intent;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -8,13 +10,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import java.util.*;
+
 import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.ArrayList;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     private ArrayList<Item> mDataset = new ArrayList<>();
 
-    public static class MyViewHolder extends RecyclerView.ViewHolder {
+    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener  {
         public TextView i_name;
         public TextView i_size;
         public TextView i_date;
@@ -23,16 +27,33 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             i_name=v.findViewById(R.id.i_name);
             i_size=v.findViewById(R.id.i_size);
             i_date=v.findViewById(R.id.i_date);
-            v.setOnCreateContextMenuListener((View.OnCreateContextMenuListener) this);
+            v.setOnCreateContextMenuListener(this);
         }
-    }
+        public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo){
+            MenuItem Edit = menu.add(Menu.NONE, 1001, 1, "상세정보");
+            MenuItem Delete = menu.add(Menu.NONE, 1002, 2, "삭제");
+            Edit.setOnMenuItemClickListener(onEditMenu);
+            Delete.setOnMenuItemClickListener(onEditMenu);
+        }
+        private final MenuItem.OnMenuItemClickListener onEditMenu = new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case 1001:
+//                        (() item).startActivityForResult(new Intent("com.android.settings.xxxxx"), 0);
 
-//    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo){
-//        MenuItem Edit = menu.add(Menu.NONE, 1001, 1, "상세정보");
-//        MenuItem Delete = menu.add(Menu.NONE, 1002, 2, "삭제");
-//        Edit.setOnMenuItemClickListener(onEditMenu);
-//        Delete.setOnMenuItemClickListener(onEditMenu);
-//    }
+                        break;
+                    case 1002:
+                        mDataset.remove(getAdapterPosition());
+                        notifyItemRemoved(getAdapterPosition());
+                        notifyItemRangeChanged(getAdapterPosition(), mDataset.size());
+                        break;
+                }
+                return true;
+            }
+        };
+
+    };
 
     // 데이터를 받아온다 배열로
     public MyAdapter(ArrayList<Item> myDataset) {
