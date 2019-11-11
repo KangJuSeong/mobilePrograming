@@ -76,6 +76,7 @@
                         tools:layout_editor_absoluteX="202dp"
                         tools:layout_editor_absoluteY="107dp" />
                     <EditText
+                        android:id="@+id/r_name"
                         android:layout_weight="1"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -102,6 +103,7 @@
                         tools:layout_editor_absoluteX="202dp"
                         tools:layout_editor_absoluteY="107dp" />
                     <EditText
+                        android:id="@+id/r_size"
                         android:layout_weight="1"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -140,10 +142,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="20dp">
                     <TextView
-                        android:id="@+id/txtdate"
+                        android:id="@+id/r_date"
                         android:layout_width="200dp"
                         android:layout_height="match_parent"
-                        android:textSize="18dp"
                         android:gravity="right"/>
                 </LinearLayout>
             </LinearLayout>
@@ -175,6 +176,7 @@
                 >
             </TextView>
             <EditText
+                android:id="@+id/r_link"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"></EditText>
@@ -213,6 +215,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
                 <EditText
+                    android:id="@+id/r_remark"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
                     android:gravity="left"
@@ -237,6 +240,7 @@
             >
             //확인 버튼 UI
             <Button
+                android:id="@+id/r_btn"
                 android:layout_marginTop="15dp"
                 android:layout_marginLeft="110dp"
                 android:layout_width="90dp"

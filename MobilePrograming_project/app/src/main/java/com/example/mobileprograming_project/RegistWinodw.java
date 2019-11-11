@@ -44,6 +44,8 @@ public class RegistWinodw extends AppCompatActivity {
                 intent.putExtra("NAME",str_name);
                 intent.putExtra("DATE",str_date);
                 intent.putExtra("SIZE",str_size);
+                intent.putExtra("LINK",str_link);
+                intent.putExtra("REMARK",str_remark);
                 setResult(RESULT_OK,intent);
                 finish();
             }

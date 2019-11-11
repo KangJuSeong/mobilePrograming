@@ -17,5 +17,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".RegistWinodw"/>
+        <activity android:name=".ModifyWindow"/>
     </application>
 </manifest>

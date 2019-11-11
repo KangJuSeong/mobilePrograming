@@ -15,10 +15,12 @@ class Item {
     String date;
     String link;
     String remark;
-    Item(String name,String date,String size) {
+    Item(String name,String date,String size,String link,String remark) {
         this.name=name;
         this.date=date;
         this.size=size;
+        this.link=link;
+        this.remark=remark;
     }
 };
 
@@ -47,6 +49,19 @@ public class MainActivity extends AppCompatActivity {
                 startActivityForResult(intent,0); //첫 인자는 인텐트 두번쨰 인자는 요청코드 번호
             }
         });
+
+//        Intent intent=getIntent();
+//        String size = intent.getStringExtra("SIZE");
+//        String name = intent.getStringExtra("NAME");
+//        String remark = intent.getStringExtra("REMARK");
+//        String date = intent.getStringExtra("DATE");
+//        String link = intent.getStringExtra("LINK");
+//        String s_pos = intent.getStringExtra("POSITION");
+//        int position=Integer.parseInt(s_pos);
+//        Item i = new Item(name,date,size,link,remark);
+//        myDataset.set(position,i);
+//        mAdapter = new MyAdapter(this,myDataset);
+//        recyclerView.setAdapter(mAdapter);
     }
 
     @Override
@@ -58,11 +73,25 @@ public class MainActivity extends AppCompatActivity {
                     String size = data.getStringExtra("SIZE");
                     String name = data.getStringExtra("NAME");
                     String date = data.getStringExtra("DATE");
-                    Item i = new Item(name,date,size);
+                    String link = data.getStringExtra("LINK");
+                    String remark = data.getStringExtra("REMARK");
+                    Item i = new Item(name,date,size,link,remark);
                     myDataset.add(i);
-                    mAdapter = new MyAdapter(myDataset);
+                    mAdapter = new MyAdapter(this,myDataset);
                     recyclerView.setAdapter(mAdapter);
                     break;
+                case 1:
+                    size = data.getStringExtra("SIZE");
+                    name = data.getStringExtra("NAME");
+                    date = data.getStringExtra("DATE");
+                    link = data.getStringExtra("LINK");
+                    remark = data.getStringExtra("REMARK");
+                    String pos=data.getStringExtra("POSITION");
+                    int position=Integer.parseInt(pos);
+                    i = new Item(name,date,size,link,remark);
+                    myDataset.set(position,i);
+                    mAdapter = new MyAdapter(this,myDataset);
+                    recyclerView.setAdapter(mAdapter);
             }
         }
     };
