@@ -22,7 +22,7 @@ public class ModifyWindow extends AppCompatActivity {
     EditText r_link;
     EditText r_size;
     EditText r_remark;
-    Button r_btn;
+    Button r_btn,cancelbtn;
     String position;
     ImageView imageView;
     int mYear, mMonth, mDay;
@@ -38,6 +38,7 @@ public class ModifyWindow extends AppCompatActivity {
         r_size=findViewById(R.id.r_size);
         r_remark=findViewById(R.id.r_remark);
         r_btn=findViewById(R.id.r_btn);
+        cancelbtn = findViewById(R.id.cancelbtn);
 
         mYear = cal.get(Calendar.YEAR);
         mMonth = cal.get(Calendar.MONTH);
@@ -80,6 +81,14 @@ public class ModifyWindow extends AppCompatActivity {
                 Intent intentimage = new Intent(Intent.ACTION_PICK);
                 intentimage.setDataAndType(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
                 startActivityForResult(intentimage, GET_GALLEY_IMAGE);
+            }
+        });
+
+        cancelbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent backintent = new Intent(ModifyWindow.this, MainActivity.class);
+                startActivity(backintent);
             }
         });
 
