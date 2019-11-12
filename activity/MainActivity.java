@@ -1,71 +1,102 @@
-package com.example.add_activity2;
-
-import android.os.Bundle;
-import android.content.Intent;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
+package com.example.mobileprograming_project;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.Toast;
+import android.widget.Button;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener{
-    private Animation add_open, add_close;
-    private Boolean isFabOpen = false;
-    private FloatingActionButton fab, add;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
+class firebase{
+    public DatabaseReference mDatabase;
+    public firebase(){ mDatabase = FirebaseDatabase.getInstance().getReference(); }
+    public void dbWrite(String userID,String name,String date,String size,String link,String remark){
+        HashMap<String, String> result = new HashMap<>();
+        result.put("DATE", date);
+        result.put("SIZE", size);
+        result.put("LINK", link);
+        result.put("REMARK", remark);
+        mDatabase.child("USERS").child(userID).child(name).setValue(result);
+    }
+}
+
+class Item {
+    String size;
+    String name;
+    String date;
+    String link;
+    String remark;
+    Item(String name,String date,String size,String link,String remark) {
+        this.name=name;
+        this.date=date;
+        this.size=size;
+        this.link=link;
+        this.remark=remark;
+    }
+};
+
+public class MainActivity extends AppCompatActivity {
+    RecyclerView recyclerView;
+    RecyclerView.Adapter mAdapter;
+    RecyclerView.LayoutManager layoutManager;
+    ArrayList<Item> myDataset=new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        add_open = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.add_open);
-        add_close = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.add_close);
-
-        fab = (FloatingActionButton) findViewById(R.id.fab);
-        add = (FloatingActionButton) findViewById(R.id.add);
-
-        fab.setOnClickListener(this);
-        add.setOnClickListener(this);
+        setContentView(R.layout.itemlist_view);
+        recyclerView = findViewById(R.id.my_recycler_view);
+        recyclerView.setHasFixedSize(true);
+        layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+        FloatingActionButton fab = findViewById(R.id.fab);
+        fab.setOnClickListener(new FABClickListener());
     }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public void onClick(View v) {
-        int id = v.getId();
-        switch (id) {
-            case R.id.fab:
-                anim();
-                //Toast.makeText(this, "Floating Action Button", Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.add:
-                anim();
-                Intent intent = new Intent(MainActivity.this, EmptyActivity.class);
-                startActivity(intent);
-                break;
+    class FABClickListener implements View.OnClickListener {
+        @Override
+        public void onClick(View v) {
+            Intent intent2 = new Intent(MainActivity.this, ModifyWindow.class);
+            startActivity(intent2);
         }
     }
 
-    public void anim() {
-        if (isFabOpen) {
-            add.startAnimation(add_close);
-            add.setClickable(false);
-            isFabOpen = false;
-        } else {
-            add.startAnimation(add_open);
-            add.setClickable(true);
-            isFabOpen = true;
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case 0:
+                    String size = data.getStringExtra("SIZE");
+                    String name = data.getStringExtra("NAME");
+                    String date = data.getStringExtra("DATE");
+                    String link = data.getStringExtra("LINK");
+                    String remark = data.getStringExtra("REMARK");
+                    Item i = new Item(name,date,size,link,remark);
+                    myDataset.add(i);
+                    mAdapter = new MyAdapter(this,myDataset);
+                    recyclerView.setAdapter(mAdapter);
+                    break;
+                case 1:
+                    size = data.getStringExtra("SIZE");
+                    name = data.getStringExtra("NAME");
+                    date = data.getStringExtra("DATE");
+                    link = data.getStringExtra("LINK");
+                    remark = data.getStringExtra("REMARK");
+                    String pos=data.getStringExtra("POSITION");
+                    int position=Integer.parseInt(pos);
+                    i = new Item(name,date,size,link,remark);
+                    myDataset.set(position,i);
+                    mAdapter = new MyAdapter(this,myDataset);
+                    recyclerView.setAdapter(mAdapter);
+            }
         }
-    }
+    };
 }
 
