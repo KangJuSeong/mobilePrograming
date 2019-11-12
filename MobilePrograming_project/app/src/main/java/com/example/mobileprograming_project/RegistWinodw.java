@@ -31,7 +31,7 @@ public class RegistWinodw extends AppCompatActivity {
     EditText link;
     EditText size;
     EditText remark;
-    Button btn,choice_date;
+    Button btn,choice_date,cancelbtn;
     DatabaseReference mDatabase;
     ImageView imageView;
     int mYear, mMonth, mDay;
@@ -55,6 +55,7 @@ public class RegistWinodw extends AppCompatActivity {
         size = findViewById(R.id.size);
         remark = findViewById(R.id.remark);
         btn = findViewById(R.id.btn);
+        cancelbtn = findViewById(R.id.cancelbtn);
         choice_date = findViewById(R.id.choice_date);
         imageView = findViewById(R.id.productImage);
 
@@ -84,12 +85,21 @@ public class RegistWinodw extends AppCompatActivity {
                 finish();
             }
         });
+
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intentimage = new Intent(Intent.ACTION_PICK);
                 intentimage.setDataAndType(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
                 startActivityForResult(intentimage, GET_GALLEY_IMAGE);
+            }
+        });
+
+        cancelbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent backintent = new Intent(RegistWinodw.this, MainActivity.class);
+                startActivity(backintent);
             }
         });
 }
