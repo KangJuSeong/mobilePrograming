@@ -52,7 +52,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:weightSum="6"
                 >
 
                 <TextView
@@ -98,27 +97,40 @@
                 </EditText>
 
 
-                <TextView
-                    android:layout_marginTop="10dp"
-                    android:layout_weight="1"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="유통 기한"
-                    android:textSize="20dp"
+                <LinearLayout
+                    android:layout_width="200dp"
+                    android:layout_height="70dp"
                     >
-
-                </TextView>
-
-
-                <EditText
-                    android:id="@+id/date"
-                    android:layout_marginRight="10dp"
-                    android:layout_weight="1"
+                    <TextView
+                        android:id="@+id/expirationDate"
+                        android:layout_weight="1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="30dp"
+                        android:text="유통기한"
+                        android:gravity="center"
+                        android:textSize="20dp"/>
+                    <Button
+                        android:id="@+id/choice_date"
+                        android:layout_weight="1"
+                        android:layout_width="190dp"
+                        android:layout_height="55dp"
+                        android:onClick="OnClickbtn"
+                        android:text="날짜선택"
+                        android:textSize="15dp" />
+                </LinearLayout>
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/back">
+                    android:layout_height="20dp">
+                    <TextView
+                        android:id="@+id/date"
+                        android:layout_width="200dp"
+                        android:layout_height="match_parent"
+                        android:textSize="18dp"
+                        android:gravity="right"/>
+                </LinearLayout>
 
-                </EditText>
+
 
             </LinearLayout>
 

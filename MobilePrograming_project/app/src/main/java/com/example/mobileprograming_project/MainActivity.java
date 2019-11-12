@@ -7,7 +7,25 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.ArrayList;
+import java.util.HashMap;
+
+class firebase{
+    public DatabaseReference mDatabase;
+    public firebase(){ mDatabase = FirebaseDatabase.getInstance().getReference(); }
+    public void dbWrite(String userID,String name,String date,String size,String link,String remark){
+        HashMap<String, String> result = new HashMap<>();
+        result.put("DATE", date);
+        result.put("SIZE", size);
+        result.put("LINK", link);
+        result.put("REMARK", remark);
+        mDatabase.child("USERS").child(userID).child(name).setValue(result);
+    }
+}
 
 class Item {
     String size;
@@ -50,18 +68,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-//        Intent intent=getIntent();
-//        String size = intent.getStringExtra("SIZE");
-//        String name = intent.getStringExtra("NAME");
-//        String remark = intent.getStringExtra("REMARK");
-//        String date = intent.getStringExtra("DATE");
-//        String link = intent.getStringExtra("LINK");
-//        String s_pos = intent.getStringExtra("POSITION");
-//        int position=Integer.parseInt(s_pos);
-//        Item i = new Item(name,date,size,link,remark);
-//        myDataset.set(position,i);
-//        mAdapter = new MyAdapter(this,myDataset);
-//        recyclerView.setAdapter(mAdapter);
+
     }
 
     @Override

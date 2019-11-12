@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "39108788523",
+    "firebase_url": "https://stocktok-54d4b.firebaseio.com",
+    "project_id": "stocktok-54d4b",
+    "storage_bucket": "stocktok-54d4b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:39108788523:android:0d03b2ebb749ee40dec56e",
+        "android_client_info": {
+          "package_name": "com.example.mobileprograming_project"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "39108788523-5vrga5rvcvfmt489v6u2j7qoi8nge1on.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.mobileprograming_project",
+            "certificate_hash": "ded55b83e6be1e6ec8c98635bcc8a18d23d88982"
+          }
+        },
+        {
+          "client_id": "39108788523-ffrri9fircqa5lugpb13i4i326ugsb6p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDHHY54M4tslGAktfxquil5-Rf0h3SLuJQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "39108788523-ffrri9fircqa5lugpb13i4i326ugsb6p.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

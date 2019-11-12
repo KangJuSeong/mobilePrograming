@@ -10,7 +10,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.ArrayList;
+import java.util.HashMap;
+
 
 public class RegistWinodw extends AppCompatActivity {
     EditText name;
@@ -19,6 +24,14 @@ public class RegistWinodw extends AppCompatActivity {
     EditText size;
     EditText remark;
     Button btn;
+    DatabaseReference mDatabase;
+
+    public void itemWrite(String userId,String name,String date,String size,String link,String remark){
+        Item i = new Item(name,date,size,link,remark);
+        DatabaseReference mDatabase;
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        mDatabase.child("users").child(userId).setValue(i);
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,11 +49,13 @@ public class RegistWinodw extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(RegistWinodw.this,MainActivity.class);
+                firebase db = new firebase();
                 String str_name=name.getText().toString();
                 String str_date=date.getText().toString();
                 String str_size=size.getText().toString();
                 String str_link=link.getText().toString();
                 String str_remark=remark.getText().toString();
+                db.dbWrite("user1",str_name,str_date,str_size,str_link,str_remark);
                 intent.putExtra("NAME",str_name);
                 intent.putExtra("DATE",str_date);
                 intent.putExtra("SIZE",str_size);
