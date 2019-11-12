@@ -129,7 +129,7 @@
                         tools:layout_editor_absoluteX="202dp"
                         tools:layout_editor_absoluteY="107dp" />
                     <Button
-                        android:id="@+id/btnchangedate"
+                        android:id="@+id/choice_date"
                         android:layout_weight="1"
                         android:layout_width="190dp"
                         android:layout_height="55dp"

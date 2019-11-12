@@ -1,13 +1,18 @@
 package com.example.mobileprograming_project;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 public class ModifyWindow extends AppCompatActivity {
     EditText r_name;
@@ -17,6 +22,8 @@ public class ModifyWindow extends AppCompatActivity {
     EditText r_remark;
     Button r_btn;
     String position;
+    int mYear, mMonth, mDay;
+    Calendar cal = new GregorianCalendar();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,6 +34,11 @@ public class ModifyWindow extends AppCompatActivity {
         r_size=findViewById(R.id.r_size);
         r_remark=findViewById(R.id.r_remark);
         r_btn=findViewById(R.id.r_btn);
+
+        mYear = cal.get(Calendar.YEAR);
+        mMonth = cal.get(Calendar.MONTH);
+        mDay = cal.get(Calendar.DAY_OF_MONTH);
+        UpdateNow();
 
         Intent intent = getIntent();
         r_name.setText(intent.getStringExtra("NAME"));
@@ -57,4 +69,23 @@ public class ModifyWindow extends AppCompatActivity {
             }
         });
     }
+    DatePickerDialog.OnDateSetListener mDateSetListener =
+            new DatePickerDialog.OnDateSetListener() {
+                @Override
+                public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                    mYear = year;
+                    mMonth = monthOfYear;
+                    mDay = dayOfMonth;
+                    UpdateNow();
+                }
+            };
+    public void OnClickbtn(View v){
+        switch(v.getId()){
+            case R.id.choice_date:
+                new DatePickerDialog(ModifyWindow.this, mDateSetListener, mYear, mMonth, mDay).show();
+                break;
+        }
+
+    }
+    private void UpdateNow() { r_date.setText(String.format("%d/%d/%d", mYear, mMonth + 1, mDay)); }
 };

@@ -1,10 +1,13 @@
 package com.example.mobileprograming_project;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -14,17 +17,21 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 
 
 public class RegistWinodw extends AppCompatActivity {
     EditText name;
-    EditText date;
+    TextView date;
     EditText link;
     EditText size;
     EditText remark;
-    Button btn;
+    Button btn,choice_date;
     DatabaseReference mDatabase;
+    int mYear, mMonth, mDay;
+    Calendar cal = new GregorianCalendar();
 
     public void itemWrite(String userId,String name,String date,String size,String link,String remark){
         Item i = new Item(name,date,size,link,remark);
@@ -43,6 +50,12 @@ public class RegistWinodw extends AppCompatActivity {
         size = findViewById(R.id.size);
         remark = findViewById(R.id.remark);
         btn = findViewById(R.id.btn);
+        choice_date = findViewById(R.id.choice_date);
+
+        mYear = cal.get(Calendar.YEAR);
+        mMonth = cal.get(Calendar.MONTH);
+        mDay = cal.get(Calendar.DAY_OF_MONTH);
+        UpdateNow();
 
         btn.setClickable(true);
         btn.setOnClickListener(new View.OnClickListener() {
@@ -68,4 +81,25 @@ public class RegistWinodw extends AppCompatActivity {
 
 
     }
+
+    DatePickerDialog.OnDateSetListener mDateSetListener =
+            new DatePickerDialog.OnDateSetListener() {
+                @Override
+                public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                    mYear = year;
+                    mMonth = monthOfYear;
+                    mDay = dayOfMonth;
+                    UpdateNow();
+                }
+            };
+    public void OnClickbtn(View v){
+        switch(v.getId()){
+            case R.id.choice_date:
+                new DatePickerDialog(RegistWinodw.this, mDateSetListener, mYear, mMonth, mDay).show();
+                break;
+        }
+
+    }
+
+    private void UpdateNow() { date.setText(String.format("%d/%d/%d", mYear, mMonth + 1, mDay)); }
 }
