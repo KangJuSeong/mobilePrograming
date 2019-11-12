@@ -33,14 +33,22 @@
                 android:text=""
                 android:textColor="#000000"
                 android:textSize="20sp" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="#ffffff">
 
             <TextView
                 android:id="@+id/courseDivide"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center|left"
+                android:layout_gravity="center"
                 android:padding="5dp"
-                android:text="      개수"
+                android:text="개수"
                 android:textColor="#000000"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -50,13 +58,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:padding="5dp"
+                android:padding="3dp"
                 android:text=""
                 android:textColor="#000000"
                 android:textSize="20sp" />
-
         </LinearLayout>
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
