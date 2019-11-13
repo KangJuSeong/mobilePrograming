@@ -2,11 +2,13 @@ package com.example.mobileprograming_project;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -28,9 +31,11 @@ public class RegistWinodw extends AppCompatActivity {
     EditText link;
     EditText size;
     EditText remark;
-    Button btn,choice_date;
+    Button btn,choice_date,cancelbtn;
     DatabaseReference mDatabase;
+    ImageView imageView;
     int mYear, mMonth, mDay;
+    private final int GET_GALLEY_IMAGE = 200;
     Calendar cal = new GregorianCalendar();
 
     public void itemWrite(String userId,String name,String date,String size,String link,String remark){
@@ -50,7 +55,9 @@ public class RegistWinodw extends AppCompatActivity {
         size = findViewById(R.id.size);
         remark = findViewById(R.id.remark);
         btn = findViewById(R.id.btn);
+        cancelbtn = findViewById(R.id.cancelbtn);
         choice_date = findViewById(R.id.choice_date);
+        imageView = findViewById(R.id.productImage);
 
         mYear = cal.get(Calendar.YEAR);
         mMonth = cal.get(Calendar.MONTH);
@@ -79,8 +86,23 @@ public class RegistWinodw extends AppCompatActivity {
             }
         });
 
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentimage = new Intent(Intent.ACTION_PICK);
+                intentimage.setDataAndType(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
+                startActivityForResult(intentimage, GET_GALLEY_IMAGE);
+            }
+        });
 
-    }
+        cancelbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent backintent = new Intent(RegistWinodw.this, MainActivity.class);
+                startActivity(backintent);
+            }
+        });
+}
 
     DatePickerDialog.OnDateSetListener mDateSetListener =
             new DatePickerDialog.OnDateSetListener() {
@@ -92,6 +114,8 @@ public class RegistWinodw extends AppCompatActivity {
                     UpdateNow();
                 }
             };
+
+
     public void OnClickbtn(View v){
         switch(v.getId()){
             case R.id.choice_date:
@@ -102,4 +126,13 @@ public class RegistWinodw extends AppCompatActivity {
     }
 
     private void UpdateNow() { date.setText(String.format("%d/%d/%d", mYear, mMonth + 1, mDay)); }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (requestCode == GET_GALLEY_IMAGE && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            Uri selectedImageUri = data.getData();
+            imageView.setImageURI(selectedImageUri);
+        }
+    }
 }
+

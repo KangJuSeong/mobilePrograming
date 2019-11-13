@@ -127,7 +127,7 @@
                         android:layout_width="200dp"
                         android:layout_height="match_parent"
                         android:textSize="18dp"
-                        android:gravity="right"/>
+                        android:gravity="left"/>
                 </LinearLayout>
 
 
@@ -241,16 +241,16 @@
             </Button>
 
             <Button
+                android:id="@+id/cancelbtn"
                 android:layout_width="90dp"
                 android:layout_height="60dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="15dp"
                 android:gravity="center"
                 android:text="취 소"
-                android:textSize="20dp"></Button>
-
+                android:textSize="20dp">
+            </Button>
         </LinearLayout>
-
     </LinearLayout>
 
 </LinearLayout>

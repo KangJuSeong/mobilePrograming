@@ -2,11 +2,13 @@ package com.example.mobileprograming_project;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,9 +22,11 @@ public class ModifyWindow extends AppCompatActivity {
     EditText r_link;
     EditText r_size;
     EditText r_remark;
-    Button r_btn;
+    Button r_btn,cancelbtn;
     String position;
+    ImageView imageView;
     int mYear, mMonth, mDay;
+    private final int GET_GALLEY_IMAGE = 200;
     Calendar cal = new GregorianCalendar();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,10 +38,12 @@ public class ModifyWindow extends AppCompatActivity {
         r_size=findViewById(R.id.r_size);
         r_remark=findViewById(R.id.r_remark);
         r_btn=findViewById(R.id.r_btn);
+        cancelbtn = findViewById(R.id.cancelbtn);
 
         mYear = cal.get(Calendar.YEAR);
         mMonth = cal.get(Calendar.MONTH);
         mDay = cal.get(Calendar.DAY_OF_MONTH);
+        imageView = findViewById(R.id.productImage);
         UpdateNow();
 
         Intent intent = getIntent();
@@ -70,6 +76,24 @@ public class ModifyWindow extends AppCompatActivity {
                 finish();
             }
         });
+
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentimage = new Intent(Intent.ACTION_PICK);
+                intentimage.setDataAndType(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
+                startActivityForResult(intentimage, GET_GALLEY_IMAGE);
+            }
+        });
+
+        cancelbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent backintent = new Intent(ModifyWindow.this, MainActivity.class);
+                startActivity(backintent);
+            }
+        });
+
     }
     DatePickerDialog.OnDateSetListener mDateSetListener =
             new DatePickerDialog.OnDateSetListener() {
@@ -90,4 +114,12 @@ public class ModifyWindow extends AppCompatActivity {
 
     }
     private void UpdateNow() { r_date.setText(String.format("%d/%d/%d", mYear, mMonth + 1, mDay)); }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (requestCode == GET_GALLEY_IMAGE && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            Uri selectedImageUri = data.getData();
+            imageView.setImageURI(selectedImageUri);
+        }
+    }
 };
