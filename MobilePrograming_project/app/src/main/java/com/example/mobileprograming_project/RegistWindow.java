@@ -8,69 +8,68 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
-
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-public class ModifyWindow extends AppCompatActivity {
-    EditText r_name;
-    TextView r_date;
-    EditText r_link;
-    EditText r_size;
-    EditText r_remark;
-    Button r_btn;
-    String position;
+
+public class RegistWindow extends AppCompatActivity {
+    EditText name;
+    TextView date;
+    EditText link;
+    EditText size;
+    EditText remark;
+    Button btn,choice_date;
+    DatabaseReference mDatabase;
     int mYear, mMonth, mDay;
     Calendar cal = new GregorianCalendar();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.info_item);
-        r_name=findViewById(R.id.r_name);
-        r_date=findViewById(R.id.r_date);
-        r_link=findViewById(R.id.r_link);
-        r_size=findViewById(R.id.r_size);
-        r_remark=findViewById(R.id.r_remark);
-        r_btn=findViewById(R.id.r_btn);
+        setContentView(R.layout.regist_item);
+        name = findViewById(R.id.name);
+        date = findViewById(R.id.date);
+        link = findViewById(R.id.link);
+        size = findViewById(R.id.size);
+        remark = findViewById(R.id.remark);
+        btn = findViewById(R.id.btn);
+        choice_date = findViewById(R.id.choice_date);
 
         mYear = cal.get(Calendar.YEAR);
         mMonth = cal.get(Calendar.MONTH);
         mDay = cal.get(Calendar.DAY_OF_MONTH);
         UpdateNow();
 
-        Intent intent = getIntent();
-        r_name.setText(intent.getStringExtra("NAME"));
-        r_date.setText(intent.getStringExtra("DATE"));
-        r_link.setText(intent.getStringExtra("LINK"));
-        r_size.setText(intent.getStringExtra("SIZE"));
-        r_remark.setText(intent.getStringExtra("REMARK"));
-        position=intent.getStringExtra("POSITION");
-
-        r_btn.setClickable(true);
-        r_btn.setOnClickListener(new View.OnClickListener() {
+        btn.setClickable(true);
+        btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ModifyWindow.this,MainActivity.class);
+                Intent intent = new Intent(RegistWindow.this,MainActivity.class);
                 firebase db = new firebase();
-                String str_name=r_name.getText().toString();
-                String str_date=r_date.getText().toString();
-                String str_size=r_size.getText().toString();
-                String str_link=r_link.getText().toString();
-                String str_remark=r_remark.getText().toString();
+                String str_name=name.getText().toString();
+                String str_date=date.getText().toString();
+                String str_size=size.getText().toString();
+                String str_link=link.getText().toString();
+                String str_remark=remark.getText().toString();
                 db.dbWrite("user1",str_name,str_date,str_size,str_link,str_remark);
                 intent.putExtra("NAME",str_name);
                 intent.putExtra("DATE",str_date);
                 intent.putExtra("SIZE",str_size);
                 intent.putExtra("LINK",str_link);
                 intent.putExtra("REMARK",str_remark);
-                intent.putExtra("POSITION",position);
                 setResult(RESULT_OK,intent);
                 finish();
             }
         });
+
+
     }
+
     DatePickerDialog.OnDateSetListener mDateSetListener =
             new DatePickerDialog.OnDateSetListener() {
                 @Override
@@ -84,10 +83,11 @@ public class ModifyWindow extends AppCompatActivity {
     public void OnClickbtn(View v){
         switch(v.getId()){
             case R.id.choice_date:
-                new DatePickerDialog(ModifyWindow.this, mDateSetListener, mYear, mMonth, mDay).show();
+                new DatePickerDialog(RegistWindow.this, mDateSetListener, mYear, mMonth, mDay).show();
                 break;
         }
 
     }
-    private void UpdateNow() { r_date.setText(String.format("%d/%d/%d", mYear, mMonth + 1, mDay)); }
-};
+
+    private void UpdateNow() { date.setText(String.format("%d/%d/%d", mYear, mMonth + 1, mDay)); }
+}

@@ -3,6 +3,7 @@ package com.example.mobileprograming_project;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -33,8 +34,10 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         }
         public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo){
             MenuItem Edit = menu.add(Menu.NONE, 1001, 1, "상세정보");
-            MenuItem Delete = menu.add(Menu.NONE, 1002, 2, "삭제");
+            MenuItem BuyItem = menu.add(Menu.NONE, 1002, 2, "바로구매");
+            MenuItem Delete = menu.add(Menu.NONE, 1003, 3, "삭제");
             Edit.setOnMenuItemClickListener(onEditMenu);
+            BuyItem.setOnMenuItemClickListener(onEditMenu);
             Delete.setOnMenuItemClickListener(onEditMenu);
         }
         private final MenuItem.OnMenuItemClickListener onEditMenu = new MenuItem.OnMenuItemClickListener() {
@@ -53,6 +56,11 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
                         ((Activity) mContext).startActivityForResult(intent, 1);
                         break;
                     case 1002:
+                        Intent uri = new Intent(Intent.ACTION_VIEW,Uri.parse("http://"+mDataset.get(getAdapterPosition()).link));
+                        ((Activity) mContext).startActivities(new Intent[]{uri});
+                    case 1003:
+                        firebase db=new firebase();
+                        db.dbDelete(mDataset.get(getAdapterPosition()).name);
                         mDataset.remove(getAdapterPosition());
                         notifyItemRemoved(getAdapterPosition());
                         notifyItemRangeChanged(getAdapterPosition(), mDataset.size());
