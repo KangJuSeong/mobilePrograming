@@ -2,11 +2,13 @@ package com.example.mobileprograming_project;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -23,8 +25,10 @@ public class RegistWindow extends AppCompatActivity {
     EditText link;
     EditText size;
     EditText remark;
-    Button btn,choice_date;
+    Button btn,choice_date, cancelbtn;
+    ImageView imageView;
     int mYear, mMonth, mDay;
+    private final int GET_GALLEY_IMAGE = 200;
     Calendar cal = new GregorianCalendar();
 
     @Override
@@ -38,6 +42,8 @@ public class RegistWindow extends AppCompatActivity {
         remark = findViewById(R.id.remark);
         btn = findViewById(R.id.btn);
         choice_date = findViewById(R.id.choice_date);
+        imageView = findViewById(R.id.productImage);
+        cancelbtn = findViewById(R.id.cancelbtn);
 
         mYear = cal.get(Calendar.YEAR);
         mMonth = cal.get(Calendar.MONTH);
@@ -64,7 +70,22 @@ public class RegistWindow extends AppCompatActivity {
             }
         });
 
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentimage = new Intent(Intent.ACTION_PICK);
+                intentimage.setDataAndType(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
+                startActivityForResult(intentimage, GET_GALLEY_IMAGE);
+            }
+        });
 
+        cancelbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent backintent = new Intent(RegistWindow.this, MainActivity.class);
+                startActivity(backintent);
+            }
+        });
     }
 
     DatePickerDialog.OnDateSetListener mDateSetListener =
@@ -87,4 +108,12 @@ public class RegistWindow extends AppCompatActivity {
     }
 
     private void UpdateNow() { date.setText(String.format("%d/%d/%d", mYear, mMonth + 1, mDay)); }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (requestCode == GET_GALLEY_IMAGE && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            Uri selectedImageUri = data.getData();
+            imageView.setImageURI(selectedImageUri);
+        }
+    }
 }
