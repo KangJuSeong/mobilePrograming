@@ -53,13 +53,11 @@ public class ModifyWindow extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(ModifyWindow.this,MainActivity.class);
-                firebase db = new firebase();
                 String str_name=r_name.getText().toString();
                 String str_date=r_date.getText().toString();
                 String str_size=r_size.getText().toString();
                 String str_link=r_link.getText().toString();
                 String str_remark=r_remark.getText().toString();
-                db.dbWrite("user1",str_name,str_date,str_size,str_link,str_remark);
                 intent.putExtra("NAME",str_name);
                 intent.putExtra("DATE",str_date);
                 intent.putExtra("SIZE",str_size);

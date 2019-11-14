@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
-
 import java.util.ArrayList;
 
 
@@ -60,8 +59,12 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
                         ((Activity) mContext).startActivities(new Intent[]{uri});
                     case 1003:
                         firebase db=new firebase();
-                        db.dbDelete(mDataset.get(getAdapterPosition()).name);
+                        db.dbDelete();
                         mDataset.remove(getAdapterPosition());
+                        for(int i=0;i<mDataset.size();i++){
+                            String pos=Integer.toString(i);
+                            db.dbWrite("user1",mDataset.get(i).name,mDataset.get(i).date,mDataset.get(i).size,mDataset.get(i).link,mDataset.get(i).remark,pos);
+                        }
                         notifyItemRemoved(getAdapterPosition());
                         notifyItemRangeChanged(getAdapterPosition(), mDataset.size());
                         break;

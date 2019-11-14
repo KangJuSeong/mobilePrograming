@@ -1,48 +1,73 @@
 package com.example.mobileprograming_project;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import static android.content.ContentValues.TAG;
+class firebase {
+    FirebaseDatabase mDatabase;
+    DatabaseReference mReference;
+    DatabaseReference mReference2;
 
-class firebase{
-    public DatabaseReference mDatabase;
-    public firebase(){ mDatabase = FirebaseDatabase.getInstance().getReference(); }
-    public void dbWrite(String userID,String name,String date,String size,String link,String remark){
+    public firebase() {
+        mDatabase = FirebaseDatabase.getInstance();
+    }
+    public void dbWrite(String userID, String name, String date, String size, String link, String remark,String cnt) {
         HashMap<String, String> result = new HashMap<>();
+        mReference=mDatabase.getReference();
+        result.put("NAME", name);
         result.put("DATE", date);
         result.put("SIZE", size);
         result.put("LINK", link);
         result.put("REMARK", remark);
-        mDatabase.child("USERS").child(userID).child(name).setValue(result);
+        mReference.child("USERS").child(userID).child("Item"+cnt).setValue(result);
     }
-    public void dbDelete(String name){ mDatabase.child("USERS").child("user1").child(name).setValue(null);}
-}
+    public void dbDelete() {
+        mReference=mDatabase.getReference();
+        mReference.child("USERS").child("user1").setValue(null);
+    }
 
+    public void dbRead(final Item item) {
+        mReference = mDatabase.getReference("USERS/user1/item0");
+        mReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot data : dataSnapshot.getChildren()) {
+                    String a=data.getValue().toString();
+                    item.name=a;
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+
+        });
+    }
+}
 class Item {
     String size;
     String name;
     String date;
     String link;
     String remark;
+    Item(){
+
+    }
     Item(String name,String date,String size,String link,String remark) {
         this.name=name;
         this.date=date;
@@ -56,18 +81,25 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     RecyclerView.Adapter mAdapter;
     RecyclerView.LayoutManager layoutManager;
+    TextView view;
     Button addBtn;
     ArrayList<Item> myDataset=new ArrayList<>();
+    firebase db=new firebase();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.itemlist_view);
+        db.dbDelete();
+        Item i = new Item();
+        db.dbRead(i);
+        view=findViewById(R.id.view);
         recyclerView = findViewById(R.id.my_recycler_view);
         addBtn = findViewById(R.id.addBtn);
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
+        view.setText(i.name);
 
         addBtn.setClickable(true);
         addBtn.setOnClickListener(new View.OnClickListener() {
@@ -95,26 +127,38 @@ public class MainActivity extends AppCompatActivity {
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
                 case 0:
-                    String size = data.getStringExtra("SIZE");
+                    firebase db=new firebase();
                     String name = data.getStringExtra("NAME");
+                    String size = data.getStringExtra("SIZE");
                     String date = data.getStringExtra("DATE");
                     String link = data.getStringExtra("LINK");
                     String remark = data.getStringExtra("REMARK");
-                    Item i = new Item(name,date,size,link,remark);
-                    myDataset.add(i);
+                    Item item1 = new Item(name,date,size,link,remark);
+                    myDataset.add(item1);
+                    db.dbDelete();
+                    for(int i=0;i<myDataset.size();i++){
+                        String postion=Integer.toString(i);
+                        db.dbWrite("user1",myDataset.get(i).name,myDataset.get(i).date,myDataset.get(i).size,myDataset.get(i).link,myDataset.get(i).remark,postion);
+                    }
                     mAdapter = new MyAdapter(this,myDataset);
                     recyclerView.setAdapter(mAdapter);
                     break;
                 case 1:
-                    size = data.getStringExtra("SIZE");
+                    db=new firebase();
                     name = data.getStringExtra("NAME");
+                    size = data.getStringExtra("SIZE");
                     date = data.getStringExtra("DATE");
                     link = data.getStringExtra("LINK");
                     remark = data.getStringExtra("REMARK");
                     String pos=data.getStringExtra("POSITION");
                     int position=Integer.parseInt(pos);
-                    i = new Item(name,date,size,link,remark);
-                    myDataset.set(position,i);
+                    Item item2 = new Item(name,date,size,link,remark);
+                    myDataset.set(position,item2);
+                    db.dbDelete();
+                    for(int i=0;i<myDataset.size();i++){
+                        String postion=Integer.toString(i);
+                        db.dbWrite("user1",myDataset.get(i).name,myDataset.get(i).date,myDataset.get(i).size,myDataset.get(i).link,myDataset.get(i).remark,postion);
+                    }
                     mAdapter = new MyAdapter(this,myDataset);
                     recyclerView.setAdapter(mAdapter);
             }

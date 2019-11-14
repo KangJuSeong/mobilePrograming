@@ -24,7 +24,6 @@ public class RegistWindow extends AppCompatActivity {
     EditText size;
     EditText remark;
     Button btn,choice_date;
-    DatabaseReference mDatabase;
     int mYear, mMonth, mDay;
     Calendar cal = new GregorianCalendar();
 
@@ -50,13 +49,11 @@ public class RegistWindow extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(RegistWindow.this,MainActivity.class);
-                firebase db = new firebase();
                 String str_name=name.getText().toString();
                 String str_date=date.getText().toString();
                 String str_size=size.getText().toString();
                 String str_link=link.getText().toString();
                 String str_remark=remark.getText().toString();
-                db.dbWrite("user1",str_name,str_date,str_size,str_link,str_remark);
                 intent.putExtra("NAME",str_name);
                 intent.putExtra("DATE",str_date);
                 intent.putExtra("SIZE",str_size);
