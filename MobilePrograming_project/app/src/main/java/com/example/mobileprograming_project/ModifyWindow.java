@@ -2,14 +2,11 @@ package com.example.mobileprograming_project;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
-import android.media.Image;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,10 +20,9 @@ public class ModifyWindow extends AppCompatActivity {
     EditText r_link;
     EditText r_size;
     EditText r_remark;
-    Button r_btn, cancelbtn;
+    Button r_btn;
+    Button c_btn;
     String position;
-    ImageView imageView;
-    private final int GET_GALLEY_IMAGE = 200;
     int mYear, mMonth, mDay;
     Calendar cal = new GregorianCalendar();
     @Override
@@ -39,20 +35,28 @@ public class ModifyWindow extends AppCompatActivity {
         r_size=findViewById(R.id.r_size);
         r_remark=findViewById(R.id.r_remark);
         r_btn=findViewById(R.id.r_btn);
-        cancelbtn = findViewById(R.id.cancelbtn);
-        imageView = findViewById(R.id.productImage);
+        c_btn=findViewById(R.id.c_btn);
+
         mYear = cal.get(Calendar.YEAR);
         mMonth = cal.get(Calendar.MONTH);
         mDay = cal.get(Calendar.DAY_OF_MONTH);
         UpdateNow();
 
         Intent intent = getIntent();
+
         r_name.setText(intent.getStringExtra("NAME"));
         r_date.setText(intent.getStringExtra("DATE"));
         r_link.setText(intent.getStringExtra("LINK"));
         r_size.setText(intent.getStringExtra("SIZE"));
         r_remark.setText(intent.getStringExtra("REMARK"));
         position=intent.getStringExtra("POSITION");
+
+        c_btn.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View view){
+                Intent intent = new Intent(ModifyWindow.this,MainActivity.class);
+                startActivity(intent);
+            }
+        });
 
         r_btn.setClickable(true);
         r_btn.setOnClickListener(new View.OnClickListener() {
@@ -74,23 +78,6 @@ public class ModifyWindow extends AppCompatActivity {
                 finish();
             }
         });
-
-        imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intentimage = new Intent(Intent.ACTION_PICK);
-                intentimage.setDataAndType(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
-                startActivityForResult(intentimage, GET_GALLEY_IMAGE);
-            }
-        });
-
-        cancelbtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent backintent = new Intent(ModifyWindow.this, MainActivity.class);
-                startActivity(backintent);
-            }
-        });
     }
     DatePickerDialog.OnDateSetListener mDateSetListener =
             new DatePickerDialog.OnDateSetListener() {
@@ -110,13 +97,5 @@ public class ModifyWindow extends AppCompatActivity {
         }
 
     }
-    private void UpdateNow() { r_date.setText(String.format("%d/%d/%d", mYear, mMonth + 1, mDay));
-    }
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-        if (requestCode == GET_GALLEY_IMAGE && resultCode == RESULT_OK && data != null && data.getData() != null) {
-            Uri selectedImageUri = data.getData();
-            imageView.setImageURI(selectedImageUri);
-        }
-    }
+    private void UpdateNow() { r_date.setText(String.format("%d/%d/%d", mYear, mMonth + 1, mDay)); }
 };
