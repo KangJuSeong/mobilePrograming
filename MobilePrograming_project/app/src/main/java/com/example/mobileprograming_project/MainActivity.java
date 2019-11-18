@@ -19,8 +19,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 class firebase {
-    FirebaseDatabase mDatabase;
-    DatabaseReference mReference;
+    public FirebaseDatabase mDatabase;
+    public DatabaseReference mReference;
     public firebase() {mDatabase = FirebaseDatabase.getInstance();}
     public void dbWrite(Item item,String cnt,String userID) {
         HashMap<String, String> result = new HashMap<>();
@@ -39,7 +39,7 @@ class firebase {
 
     public void dbRead(final ArrayList<Item> myDataset,String userID) {
         mReference = mDatabase.getReference("USERS/"+userID+"/");
-        mReference.addValueEventListener(new ValueEventListener() {
+        mReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot data : dataSnapshot.getChildren()) {
@@ -57,7 +57,6 @@ class firebase {
         });
     }
 }
-
 class Item {
     String size;
     String name;
@@ -79,7 +78,6 @@ class Item {
     public void setRemark(String remark){this.remark=remark;}
 
 }
-
 class myIntent{
     public myIntent(){}
     public Item getData(Intent intent){
@@ -98,19 +96,21 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView.Adapter mAdapter;
     RecyclerView.LayoutManager layoutManager;
     ArrayList<Item> myDataset=new ArrayList<>();
+    ArrayList<Item> tDataset=new ArrayList<>();
     firebase db=new firebase();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.itemlist_view);
-//        db.dbDelete();
         recyclerView = findViewById(R.id.my_recycler_view);
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         FloatingActionButton addBtn = findViewById(R.id.addBtn);
         addBtn.setOnClickListener(new FABClickListener());
+        db.dbRead(tDataset,"user1");
+        myDataset=tDataset;
         mAdapter = new MyAdapter(this,myDataset);
         recyclerView.setAdapter(mAdapter);
     }

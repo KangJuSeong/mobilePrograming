@@ -77,7 +77,6 @@ public class RegistWindow extends AppCompatActivity {
                 finish();
             }
         });
-
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -86,10 +85,7 @@ public class RegistWindow extends AppCompatActivity {
                 startActivityForResult(intentimage, GET_GALLEY_IMAGE);
             }
         });
-
-
     }
-
     DatePickerDialog.OnDateSetListener mDateSetListener =
             new DatePickerDialog.OnDateSetListener() {
                 @Override
@@ -106,8 +102,6 @@ public class RegistWindow extends AppCompatActivity {
                 new DatePickerDialog(RegistWindow.this, mDateSetListener, mYear, mMonth, mDay).show();
                 break;
         }
-
     }
-
     private void UpdateNow() { date.setText(String.format("%d/%d/%d", mYear, mMonth + 1, mDay)); }
 }
