@@ -1,14 +1,15 @@
 package com.example.mobileprograming_project;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -19,8 +20,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 class firebase {
+    public boolean check;
     public FirebaseDatabase mDatabase;
     public DatabaseReference mReference;
+    public String userID;
     public firebase() {mDatabase = FirebaseDatabase.getInstance();}
     public void dbWrite(Item item,String cnt,String userID) {
         HashMap<String, String> result = new HashMap<>();
@@ -56,6 +59,25 @@ class firebase {
             public void onCancelled(DatabaseError databaseError) {}
         });
     }
+    public boolean dbCheckUser(String ID, final String PW){
+        mReference = mDatabase.getReference("USERS/"+ID+"/");
+        mReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String pw=dataSnapshot.getValue().toString();
+                if(pw.equals(PW)) check=true;
+                else check=false;
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {check=false;}
+        });
+        return check;
+    }
+    public void dbSignupUser(String ID,String PW){
+
+    }
+
+
 }
 class Item {
     String size;
@@ -92,33 +114,83 @@ class myIntent{
 }
 
 public class MainActivity extends AppCompatActivity {
+    private Animation fab_open, fab_close;
+    private Boolean isFabOpen = false;
+    private FloatingActionButton fab, addBtn, logout;
     RecyclerView recyclerView;
     RecyclerView.Adapter mAdapter;
     RecyclerView.LayoutManager layoutManager;
     ArrayList<Item> myDataset=new ArrayList<>();
     ArrayList<Item> tDataset=new ArrayList<>();
     firebase db=new firebase();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.itemlist_view);
+
+        Intent userInfo = getIntent();
+        db.userID=userInfo.getExtras().getString("userID");
+
+
+        Toolbar tb =  findViewById(R.id.toolbar);
+        fab = findViewById(R.id.fab);
+        addBtn = findViewById(R.id.addBtn);
+        logout = findViewById(R.id.logout);
+
         recyclerView = findViewById(R.id.my_recycler_view);
         recyclerView.setHasFixedSize(true);
-        layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        FloatingActionButton addBtn = findViewById(R.id.addBtn);
+        layoutManager = new LinearLayoutManager(this);
+
+        tb.setTitle(R.string.myAppName);
+        tb.setBackgroundColor(Color.rgb(255,111,97));
+        setSupportActionBar(tb);
+
+        fab_open = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_open);
+        fab_close = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_close);
+        fab.setOnClickListener(new FABClickListener());
         addBtn.setOnClickListener(new FABClickListener());
-        db.dbRead(tDataset,"user1");
+        logout.setOnClickListener(new FABClickListener());
+
+        db.dbRead(tDataset,db.userID);
+
         myDataset=tDataset;
-        mAdapter = new MyAdapter(this,myDataset);
-        recyclerView.setAdapter(mAdapter);
+//        mAdapter = new MyAdapter(this,myDataset);
+//        recyclerView.setAdapter(mAdapter);
     }
     class FABClickListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
-            Intent intent2 = new Intent(MainActivity.this, RegistWindow.class);
-            startActivityForResult(intent2, 0);
+            int id = v.getId();
+            switch (id) {
+                case R.id.fab:
+                    anim();
+                    break;
+                case R.id.addBtn:
+                    anim();
+                    Intent intent2 = new Intent(MainActivity.this, RegistWindow.class);
+                    startActivityForResult(intent2, 0);
+                    break;
+                case R.id.logout:
+                    anim();
+                    //로그아웃 기능
+                    break;
+            }
+        }
+    }
+    public void anim() {
+        if (isFabOpen) {
+            addBtn.startAnimation(fab_close);
+            logout.startAnimation(fab_close);
+            addBtn.setClickable(false);
+            logout.setClickable(false);
+            isFabOpen = false;
+        } else {
+            addBtn.startAnimation(fab_open);
+            logout.startAnimation(fab_open);
+            addBtn.setClickable(true);
+            logout.setClickable(true);
+            isFabOpen = true;
         }
     }
     @Override
@@ -131,11 +203,11 @@ public class MainActivity extends AppCompatActivity {
                     myIntent mIntent=new myIntent();
                     Item item1 = mIntent.getData(data);
                     myDataset.add(item1);
-                    db.dbDelete("user1");
+                    db.dbDelete(db.userID);
                     for(int i=0;i<myDataset.size();i++){
                         String postion=Integer.toString(i);
                         Item temp=new Item(myDataset.get(i).name,myDataset.get(i).date,myDataset.get(i).size,myDataset.get(i).link,myDataset.get(i).remark);
-                        db.dbWrite(temp,postion,"user1");
+                        db.dbWrite(temp,postion,db.userID);
                     }
                     mAdapter = new MyAdapter(this,myDataset);
                     recyclerView.setAdapter(mAdapter);
@@ -147,15 +219,18 @@ public class MainActivity extends AppCompatActivity {
                     String pos=data.getStringExtra("POSITION");
                     int position=Integer.parseInt(pos);
                     myDataset.set(position,item2);
-                    db.dbDelete("user1");
+                    db.dbDelete(db.userID);
                     for(int i=0;i<myDataset.size();i++){
                         String postion=Integer.toString(i);
                         Item temp = new Item(myDataset.get(i).name,myDataset.get(i).date,myDataset.get(i).size,myDataset.get(i).link,myDataset.get(i).remark);
-                        db.dbWrite(temp,postion,"user1");
+                        db.dbWrite(temp,postion,db.userID);
                     }
                     mAdapter = new MyAdapter(this,myDataset);
                     recyclerView.setAdapter(mAdapter);
             }
+        }
+        else{
+
         }
     }
 }

@@ -53,7 +53,8 @@ public class RegistWindow extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(RegistWindow.this,MainActivity.class);
-                startActivity(intent);
+                setResult(0,intent);
+                finish();
             }
         });
 

@@ -54,7 +54,8 @@ public class ModifyWindow extends AppCompatActivity {
         c_btn.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view){
                 Intent intent = new Intent(ModifyWindow.this,MainActivity.class);
-                startActivity(intent);
+                setResult(0,intent);
+                finish();
             }
         });
 

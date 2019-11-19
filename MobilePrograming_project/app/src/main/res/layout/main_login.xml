@@ -20,7 +20,6 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="100dp"
         />
-
     <TextView
         android:id="@+id/login_title"
         android:layout_width="match_parent"
@@ -43,7 +42,7 @@
         android:layout_centerHorizontal="true"
         android:layout_below="@id/login_title">
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/id"
+            android:id="@+id/login_id"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="ID"/>
@@ -58,7 +57,7 @@
         android:layout_centerHorizontal="true"
         android:layout_below="@id/email_view">
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/password"
+            android:id="@+id/login_pw"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Password"/>
@@ -132,7 +131,7 @@
             android:text="SIGN UP"
             android:gravity="center"
             android:textColor="#ffffff"
-            android:background="##ffaf00"
+            android:background="#ffaf00"
             android:layout_toEndOf="@id/icon_2"
             android:layout_marginEnd="30dp"
             />
