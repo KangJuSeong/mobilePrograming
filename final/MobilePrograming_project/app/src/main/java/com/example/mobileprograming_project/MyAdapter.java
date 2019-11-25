@@ -47,17 +47,17 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
                     case 1001:
                         String postion=Integer.toString(getAdapterPosition());
                         Intent intent=new Intent(mContext,ModifyWindow.class);
-                        intent.putExtra("NAME",mDataset.get(getAdapterPosition()).name);
-                        intent.putExtra("DATE",mDataset.get(getAdapterPosition()).date);
-                        intent.putExtra("LINK",mDataset.get(getAdapterPosition()).link);
-                        intent.putExtra("SIZE",mDataset.get(getAdapterPosition()).size);
-                        intent.putExtra("REMARK",mDataset.get(getAdapterPosition()).remark);
+                        intent.putExtra("NAME",mDataset.get(getAdapterPosition()).NAME);
+                        intent.putExtra("DATE",mDataset.get(getAdapterPosition()).DATE);
+                        intent.putExtra("LINK",mDataset.get(getAdapterPosition()).LINK);
+                        intent.putExtra("SIZE",mDataset.get(getAdapterPosition()).SIZE);
+                        intent.putExtra("REMARK",mDataset.get(getAdapterPosition()).REMARK);
                         intent.putExtra("POSITION",postion);
                         intent.putExtra("userID",userID);
                         ((Activity) mContext).startActivityForResult(intent, 1);
                         break;
                     case 1002:
-                        Intent uri = new Intent(Intent.ACTION_VIEW,Uri.parse("http://"+mDataset.get(getAdapterPosition()).link));
+                        Intent uri = new Intent(Intent.ACTION_VIEW,Uri.parse("http://"+mDataset.get(getAdapterPosition()).LINK));
                         ((Activity) mContext).startActivities(new Intent[]{uri});
                     case 1003:
                         firebase db=new firebase();
@@ -65,7 +65,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
                         mDataset.remove(getAdapterPosition());
                         for(int i=0;i<mDataset.size();i++){
                             String pos=Integer.toString(i);
-                            Item item3 = new Item(mDataset.get(i).name,mDataset.get(i).date,mDataset.get(i).size,mDataset.get(i).link,mDataset.get(i).remark);
+                            Item item3 = new Item(mDataset.get(i).NAME,mDataset.get(i).DATE,mDataset.get(i).SIZE,mDataset.get(i).LINK,mDataset.get(i).REMARK);
                             db.dbWrite(item3,pos,userID);
                         }
                         notifyItemRemoved(getAdapterPosition());
@@ -92,10 +92,20 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     }
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        holder.i_date.setText(mDataset.get(position).date);
-        holder.i_name.setText(mDataset.get(position).name);
-        holder.i_size.setText(mDataset.get(position).size);
+        holder.i_date.setText(mDataset.get(position).DATE);
+        holder.i_name.setText(mDataset.get(position).NAME);
+        holder.i_size.setText(mDataset.get(position).SIZE);
     }
     @Override
     public int getItemCount() {return mDataset.size();}
+
+    public void addItem(Item item) {
+        mDataset.add(item);
+        notifyItemInserted(mDataset.size()-1); //갱신
+    }
+
+    public void changeItem(Item item,int index) {
+        mDataset.set(index,item);
+        notifyItemChanged(index);
+    }
 }

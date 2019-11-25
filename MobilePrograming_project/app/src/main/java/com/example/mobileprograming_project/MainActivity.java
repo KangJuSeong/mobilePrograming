@@ -33,15 +33,15 @@ class firebase {
         result.put("SIZE", item.size);
         result.put("LINK", item.link);
         result.put("REMARK", item.remark);
-        mReference.child("USERS").child(userID).child("Item"+cnt).setValue(result);
+        mReference.child("ITEMS").child(userID).child("Item"+cnt).setValue(result);
     }
     public void dbDelete(String userID) {
         mReference=mDatabase.getReference();
-        mReference.child("USERS").child(userID).setValue(null);
+        mReference.child("ITEMS").child(userID).setValue(null);
     }
 
     public void dbRead(final ArrayList<Item> myDataset,String userID) {
-        mReference = mDatabase.getReference("USERS/"+userID+"/");
+        mReference = mDatabase.getReference("ITEMS/"+userID+"/");
         mReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -60,7 +60,7 @@ class firebase {
         });
     }
     public boolean dbCheckUser(String ID, final String PW){
-        mReference = mDatabase.getReference("USERS/"+ID+"/");
+        mReference = mDatabase.getReference("USERS/");
         mReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -152,9 +152,9 @@ public class MainActivity extends AppCompatActivity {
         addBtn.setOnClickListener(new FABClickListener());
         logout.setOnClickListener(new FABClickListener());
 
-        db.dbRead(tDataset,db.userID);
-
-        myDataset=tDataset;
+//        db.dbRead(tDataset,db.userID);
+//
+//        myDataset=tDataset;
 //        mAdapter = new MyAdapter(this,myDataset);
 //        recyclerView.setAdapter(mAdapter);
     }
@@ -169,6 +169,7 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.addBtn:
                     anim();
                     Intent intent2 = new Intent(MainActivity.this, RegistWindow.class);
+                    intent2.putExtra("userID",db.userID);
                     startActivityForResult(intent2, 0);
                     break;
                 case R.id.logout:
@@ -209,7 +210,7 @@ public class MainActivity extends AppCompatActivity {
                         Item temp=new Item(myDataset.get(i).name,myDataset.get(i).date,myDataset.get(i).size,myDataset.get(i).link,myDataset.get(i).remark);
                         db.dbWrite(temp,postion,db.userID);
                     }
-                    mAdapter = new MyAdapter(this,myDataset);
+                    mAdapter = new MyAdapter(this,myDataset,db.userID);
                     recyclerView.setAdapter(mAdapter);
                     break;
                 case 1:
@@ -225,7 +226,7 @@ public class MainActivity extends AppCompatActivity {
                         Item temp = new Item(myDataset.get(i).name,myDataset.get(i).date,myDataset.get(i).size,myDataset.get(i).link,myDataset.get(i).remark);
                         db.dbWrite(temp,postion,db.userID);
                     }
-                    mAdapter = new MyAdapter(this,myDataset);
+                    mAdapter = new MyAdapter(this,myDataset,db.userID);
                     recyclerView.setAdapter(mAdapter);
             }
         }
