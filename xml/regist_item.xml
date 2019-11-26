@@ -27,8 +27,9 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginBottom="20dp"
-                android:src="@drawable/add" />
+                android:src="@drawable/addpic" />
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="45dp"
@@ -41,8 +42,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
-                android:text="제품명"
                 android:gravity="left|center"
+                android:text="제품명"
                 android:textSize="15dp" />
 
             <EditText
@@ -52,11 +53,11 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="30sp"
                 android:layout_weight="1"
+                android:background="@null"
                 android:ems="17"
                 android:hint="제품명을 입력해주세요."
-                android:textSize="15dp"
-                android:background="@null"
-                android:inputType="textPersonName" />
+                android:inputType="textPersonName"
+                android:textSize="15dp" />
         </LinearLayout>
 
         <LinearLayout
@@ -82,11 +83,11 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="46dp"
                 android:layout_weight="1"
+                android:background="@null"
                 android:ems="17"
                 android:hint="수량을 입력해주세요."
-                android:textSize="15dp"
-                android:background="@null"
-                android:inputType="textPersonName" />
+                android:inputType="textPersonName"
+                android:textSize="15dp" />
         </LinearLayout>
 
 
@@ -111,12 +112,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_weight="1"
                 android:layout_marginLeft="25dp"
+                android:layout_weight="1"
                 android:ems="7"
+                android:gravity="left|center"
                 android:textSize="20sp"
-                android:textStyle="bold"
-                android:gravity="left|center"/>
+                android:textStyle="bold" />
 
 
             <Button
@@ -125,8 +126,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="10sp"
-                android:onClick="OnClickbtn"
                 android:layout_weight="1"
+                android:onClick="OnClickbtn"
                 android:text="날짜선택" />
 
         </LinearLayout>
@@ -154,11 +155,11 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="25dp"
                 android:layout_weight="1"
+                android:background="@null"
                 android:ems="17"
                 android:hint="구매링크를 입력해주세요."
-                android:textSize="15dp"
-                android:background="@null"
-                android:inputType="textPersonName" />
+                android:inputType="textPersonName"
+                android:textSize="15dp" />
         </LinearLayout>
 
         <LinearLayout
@@ -186,14 +187,15 @@
                 android:layout_marginBottom="10dp"
                 android:layout_weight="1"
                 android:background="@drawable/back"
-                android:ems="15" />
+                android:ems="15"
+                android:hint="메모를 입력해주세요." />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginBottom="25sp"
-            android:layout_marginLeft="25dp">
+            android:layout_marginLeft="25dp"
+            android:layout_marginBottom="25sp">
 
             <Button
                 android:id="@+id/btn"
