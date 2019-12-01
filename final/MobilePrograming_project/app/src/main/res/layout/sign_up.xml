@@ -58,49 +58,58 @@
                 ></TextView>
             <EditText
                 android:id="@+id/new_id"
-                android:layout_width="220dp"
+                android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_toRightOf="@+id/txt_id"
                 >
             </EditText>
-
-            <Button
-                android:id="@+id/cheak"
-                android:layout_width="75dp"
-                android:layout_height="45dp"
-                android:layout_toRightOf="@+id/new_id"
-                android:layout_marginLeft="5dp"
-                android:text="중복검사"
-                android:background="@drawable/rounded_login"
-                android:textColor="#ffffff"
-                android:textSize="15dp"
-                android:textStyle="bold"
-                />
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="350dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="5dp"
             >
             <TextView
                 android:id="@+id/txt_pw"
-                android:layout_width="55dp"
+                android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:text="PW : "
-                android:textSize="25dp"
                 android:layout_centerVertical="true"
-                >
-
-            </TextView>
+                android:textSize="20dp"
+                ></TextView>
             <EditText
                 android:id="@+id/new_pw"
-                android:layout_width="220dp"
-                android:layout_height="40dp"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
                 android:layout_toRightOf="@+id/txt_pw"
-                ></EditText>
+                >
+            </EditText>
         </RelativeLayout>
+
+<!--        <RelativeLayout-->
+<!--            android:layout_width="350dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_gravity="center"-->
+<!--            android:layout_marginTop="5dp"-->
+<!--            >-->
+<!--            <TextView-->
+<!--                android:id="@+id/txt_pw"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="50dp"-->
+<!--                android:text="PW : "-->
+<!--                android:textSize="25dp"-->
+<!--                android:layout_centerVertical="true"-->
+<!--                >-->
+
+<!--            </TextView>-->
+<!--            <EditText-->
+<!--                android:id="@+id/new_pw"-->
+<!--                android:layout_width="220dp"-->
+<!--                android:layout_height="40dp"-->
+<!--                android:layout_toRightOf="@+id/txt_pw"-->
+<!--                ></EditText>-->
+<!--        </RelativeLayout>-->
 
         <LinearLayout
             android:layout_width="350dp"

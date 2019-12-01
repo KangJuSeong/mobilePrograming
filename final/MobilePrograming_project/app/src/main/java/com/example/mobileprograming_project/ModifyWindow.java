@@ -1,7 +1,9 @@
 package com.example.mobileprograming_project;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -10,6 +12,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -21,7 +24,6 @@ public class ModifyWindow extends AppCompatActivity {
     EditText r_size;
     EditText r_remark;
     Button r_btn;
-    Button c_btn;
     String position;
     int mYear, mMonth, mDay;
     Calendar cal = new GregorianCalendar();
@@ -29,13 +31,13 @@ public class ModifyWindow extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.info_item);
+
         r_name=findViewById(R.id.r_name);
         r_date=findViewById(R.id.r_date);
         r_link=findViewById(R.id.r_link);
         r_size=findViewById(R.id.r_size);
         r_remark=findViewById(R.id.r_remark);
         r_btn=findViewById(R.id.r_btn);
-        c_btn=findViewById(R.id.c_btn);
 
         mYear = cal.get(Calendar.YEAR);
         mMonth = cal.get(Calendar.MONTH);
@@ -51,14 +53,6 @@ public class ModifyWindow extends AppCompatActivity {
         r_size.setText(intent.getStringExtra("SIZE"));
         r_remark.setText(intent.getStringExtra("REMARK"));
         position=intent.getStringExtra("POSITION");
-
-        c_btn.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View view){
-                Intent intent = new Intent(ModifyWindow.this,MainActivity.class);
-                setResult(0,intent);
-                finish();
-            }
-        });
 
         r_btn.setClickable(true);
         r_btn.setOnClickListener(new View.OnClickListener() {

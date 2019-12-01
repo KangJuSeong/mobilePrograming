@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity {
-    private Animation fab_open, fab_close;
+    private Animation fab_open, fab_close, rotate_open, rotate_close;
     private Boolean isFabOpen = false;
     private FloatingActionButton fab, addBtn, logout;
     RecyclerView recyclerView;
@@ -32,6 +32,60 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView.LayoutManager layoutManager;
     ArrayList<Item> myDataset=new ArrayList<>();
     firebase db=new firebase();
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        try{
+            db.mReference=db.mDatabase.getReference("ITEMS/" + db.userID+"/");
+            db.mReference.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    myDataset.clear();
+                    for(DataSnapshot data : dataSnapshot.getChildren()){
+                        String name=data.child("NAME").getValue().toString();
+                        String size=data.child("SIZE").getValue().toString();
+                        String date=data.child("DATE").getValue().toString();
+                        String link=data.child("LINK").getValue().toString();
+                        String remark=data.child("REMARK").getValue().toString();
+                        Item item = new Item(name,date,size,link,remark);
+                        myDataset.add(item);
+                    }
+                    mAdapter.notifyDataSetChanged();
+                }
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {}
+            });
+        }
+        catch (Exception e){}
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        try{
+            db.mReference=db.mDatabase.getReference("ITEMS/" + db.userID+"/");
+            db.mReference.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    myDataset.clear();
+                    for(DataSnapshot data : dataSnapshot.getChildren()){
+                        String name=data.child("NAME").getValue().toString();
+                        String size=data.child("SIZE").getValue().toString();
+                        String date=data.child("DATE").getValue().toString();
+                        String link=data.child("LINK").getValue().toString();
+                        String remark=data.child("REMARK").getValue().toString();
+                        Item item = new Item(name,date,size,link,remark);
+                        myDataset.add(item);
+                    }
+                    mAdapter.notifyDataSetChanged();
+                }
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {}
+            });
+        }
+        catch (Exception e){}
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,11 +108,14 @@ public class MainActivity extends AppCompatActivity {
         tb.setBackgroundColor(Color.rgb(255, 111, 97));
         setSupportActionBar(tb);
 
+        rotate_open = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.rotate_open);
+        rotate_close = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.rotate_close);
         fab_open = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_open);
         fab_close = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_close);
         fab.setOnClickListener(new FABClickListener());
         addBtn.setOnClickListener(new FABClickListener());
         logout.setOnClickListener(new FABClickListener());
+        //처음 화면이 켜지면 데이터를 한번 불러옴
         try{
             db.mReference=db.mDatabase.getReference("ITEMS/" + db.userID+"/");
             db.mReference.addValueEventListener(new ValueEventListener() {
@@ -85,6 +142,7 @@ public class MainActivity extends AppCompatActivity {
         mAdapter = new MyAdapter(this,myDataset,db.userID);
         recyclerView.setAdapter(mAdapter);
     }
+    //fab버튼을 통해 각각의 화면으로 이동함
     class FABClickListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
@@ -109,12 +167,14 @@ public class MainActivity extends AppCompatActivity {
     }
     public void anim() {
         if (isFabOpen) {
+            fab.startAnimation(rotate_close);
             addBtn.startAnimation(fab_close);
             logout.startAnimation(fab_close);
             addBtn.setClickable(false);
             logout.setClickable(false);
             isFabOpen = false;
         } else {
+            fab.startAnimation(rotate_open);
             addBtn.startAnimation(fab_open);
             logout.startAnimation(fab_open);
             addBtn.setClickable(true);
@@ -122,6 +182,7 @@ public class MainActivity extends AppCompatActivity {
             isFabOpen = true;
         }
     }
+    //다른 액티비티로부터 가져온 데이터를 파이어베이스에 쓰는 역할을 함
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

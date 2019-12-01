@@ -1,94 +1,142 @@
 <?xml version="1.0" encoding="utf-8"?>
 
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:orientation="horizontal"
+    android:weightSum="10"
+    android:background="@drawable/outlinebottom"
+    >
     <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:orientation="horizontal"
-        android:weightSum="10"
-        android:background="@drawable/outlinebottom"
-
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.5"/>
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="4"
+        android:orientation="vertical"
+        android:weightSum="3"
+        android:padding="5dp"
         >
-        <ImageView
-            android:id="@+id/bono"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:layout_weight="3"
+        <TextView
+            android:id="@+id/i_name"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:textColor="#000000"
+            android:gravity="center_vertical"
+            android:textSize="25sp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:textStyle="bold"
+            android:text="제품명"
+            android:maxLines="1"
+            android:ellipsize="end"
             />
         <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="6"
-            android:orientation="vertical"
-            android:weightSum="3"
-            android:padding="5dp"
-            >
-            <TextView
-                android:id="@+id/i_name"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="2"
-                android:textColor="#000000"
-                android:gravity="center_vertical"
-                android:textSize="25sp"
-                android:paddingTop="5dp"
-                android:paddingBottom="5dp"
-                android:textStyle="bold"
-                android:text="BONOBONO"
-                />
-            <LinearLayout
-                android:layout_width="130dp"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:paddingBottom="8dp"
-                android:background="@drawable/rounded"
-                >
-                <TextView
-                    android:id="@+id/i_date"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:textColor="#FF6D70"
-                    android:gravity="center"
-                    android:textSize="18sp"
-                    android:text="2019 . 11 . 14"/>
-            </LinearLayout>
-
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_width="130dp"
+            android:layout_height="0dp"
             android:layout_weight="1"
-            android:weightSum="7"
-            android:orientation="vertical"
-            android:paddingTop="10dp"
+            android:paddingBottom="8dp"
+            android:background="@drawable/rounded"
             >
             <TextView
+                android:id="@+id/i_date"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="2"
+                android:layout_height="match_parent"
+                android:textColor="#FF6D70"
+                android:gravity="center"
+                android:textSize="18sp"
+                android:text="2019 . 11 . 14"/>
+        </LinearLayout>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.5"/>
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="5"
+        android:weightSum="2"
+        android:orientation="vertical"
+        android:paddingTop="10dp"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:weightSum="5"
+            android:orientation="horizontal"
+            >
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:textSize="20dp"
                 android:textColor="#000000"
                 android:text="재고"
+                android:textStyle="bold"
                 android:gravity="center"
                 />
             <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                />
+            <TextView
                 android:id="@+id/i_size"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="5"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
                 android:textColor="#FF6D70"
-                android:paddingTop="10dp"
+                android:text="0"
                 android:gravity="center_horizontal"
                 android:textSize="33sp"
                 android:textStyle="bold"
                 />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:weightSum="5"
+            android:orientation="horizontal"
+            >
 
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:textSize="20dp"
+                android:textColor="#000000"
+                android:text="메모"
+                android:textStyle="bold"
+                android:gravity="center"
+                />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                />
+            <TextView
+                android:id="@+id/i_remark"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:gravity="center"
+                android:textSize="20sp"
+                android:text="메모"
+                android:maxLines="1"
+                android:ellipsize="end"
+                />
         </LinearLayout>
 
-
-
-
-
     </LinearLayout>
+
+</LinearLayout>
 

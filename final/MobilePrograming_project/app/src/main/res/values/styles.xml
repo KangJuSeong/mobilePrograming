@@ -10,7 +10,6 @@
     </style>
 
     <style name="AppTheme.NoActionBar">
-        <item name="android:windowBackground">@android:color/white</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:actionBarSize">49dp</item>

@@ -16,7 +16,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
+// 파이어베이스를 관리해주는 클래스
 public class firebase {
     public boolean check;
     public FirebaseDatabase mDatabase;
@@ -27,7 +27,7 @@ public class firebase {
         mDatabase = FirebaseDatabase.getInstance();
         mUser = FirebaseAuth.getInstance();
     }
-
+// 데이터를 파이어베이스에 쓸 때 사용하는 함수
     public void dbWrite(Item item,String cnt,String userID) {
         HashMap<String, String> result = new HashMap<>();
         mReference=mDatabase.getReference();
@@ -38,6 +38,7 @@ public class firebase {
         result.put("REMARK", item.REMARK);
         mReference.child("ITEMS").child(userID).child("Item"+cnt).setValue(result);
     }
+    //데이터를 파이어베이스에서 지울때 사용하는 함수
     public void dbDelete(String userID) {
         mReference=mDatabase.getReference();
         mReference.child("ITEMS").child(userID).setValue(null);

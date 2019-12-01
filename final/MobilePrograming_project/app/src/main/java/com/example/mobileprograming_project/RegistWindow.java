@@ -2,6 +2,7 @@ package com.example.mobileprograming_project;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -10,6 +11,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -24,7 +26,7 @@ public class RegistWindow extends AppCompatActivity {
     EditText link;
     EditText size;
     EditText remark;
-    Button btn,choice_date,b_btn;
+    Button btn,choice_date;
     int mYear, mMonth, mDay;
     ImageView imageView;
     private final int GET_GALLEY_IMAGE = 200;
@@ -34,6 +36,7 @@ public class RegistWindow extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.regist_item);
+
         name = findViewById(R.id.name);
         date = findViewById(R.id.date);
         link = findViewById(R.id.link);
@@ -41,7 +44,6 @@ public class RegistWindow extends AppCompatActivity {
         remark = findViewById(R.id.remark);
         btn = findViewById(R.id.btn);
         choice_date = findViewById(R.id.choice_date);
-        b_btn = findViewById(R.id.b_btn);
         imageView = findViewById(R.id.productImage);
 
         mYear = cal.get(Calendar.YEAR);
@@ -51,15 +53,6 @@ public class RegistWindow extends AppCompatActivity {
 
         Intent intent = getIntent();
         final String userID=intent.getStringExtra("userID");
-        b_btn.setClickable(true);
-        b_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(RegistWindow.this,MainActivity.class);
-                setResult(0,intent);
-                finish();
-            }
-        });
 
         btn.setClickable(true);
         btn.setOnClickListener(new View.OnClickListener() {

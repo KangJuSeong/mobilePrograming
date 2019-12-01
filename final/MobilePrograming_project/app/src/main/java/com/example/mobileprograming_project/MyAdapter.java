@@ -25,13 +25,16 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         public TextView i_name;
         public TextView i_size;
         public TextView i_date;
+        public TextView i_remark;
         public MyViewHolder(View v) {
             super(v);
             i_name=v.findViewById(R.id.i_name);
             i_size=v.findViewById(R.id.i_size);
             i_date=v.findViewById(R.id.i_date);
+            i_remark=v.findViewById(R.id.i_remark);
             v.setOnCreateContextMenuListener(this);
         }
+        // 각각의 메뉴의 대한 내용을 표시해줌
         public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo){
             MenuItem Edit = menu.add(Menu.NONE, 1001, 1, "상세정보");
             MenuItem BuyItem = menu.add(Menu.NONE, 1002, 2, "바로구매");
@@ -40,6 +43,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             BuyItem.setOnMenuItemClickListener(onEditMenu);
             Delete.setOnMenuItemClickListener(onEditMenu);
         }
+        // 길게 눌렀을 때 나오는 메뉴에 따른 버튼을 클릭했을 때 실행됨
         private final MenuItem.OnMenuItemClickListener onEditMenu = new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
@@ -90,11 +94,13 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         MyViewHolder vh = new MyViewHolder(v);
         return vh;
     }
+    // Item에 데이터를 표시해줌
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         holder.i_date.setText(mDataset.get(position).DATE);
         holder.i_name.setText(mDataset.get(position).NAME);
         holder.i_size.setText(mDataset.get(position).SIZE);
+        holder.i_remark.setText(mDataset.get(position).REMARK);
     }
     @Override
     public int getItemCount() {return mDataset.size();}

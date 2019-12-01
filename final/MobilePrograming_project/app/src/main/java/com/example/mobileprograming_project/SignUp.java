@@ -46,6 +46,7 @@ public class SignUp extends AppCompatActivity {
         });
 
     }
+    //파이어베이스에 회원정보를 등록해주는 함수
     private void registerUser() {
         String email = id.getText().toString().trim();
         String password = pw.getText().toString().trim();
@@ -64,7 +65,7 @@ public class SignUp extends AppCompatActivity {
                             finish();
                             startActivity(new Intent(getApplicationContext(), Login.class));
                         } else {
-                            Toast.makeText(SignUp.this, "등록 에러!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(SignUp.this, "이미 존재하는 이메일 입니다.", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });

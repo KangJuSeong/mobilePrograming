@@ -1,5 +1,6 @@
 package com.example.mobileprograming_project;
 
+//데이터 하나의 정보를 가지는 객체를 생성해주는 클래스
 public class Item {
     String SIZE;
     String NAME;

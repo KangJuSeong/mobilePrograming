@@ -49,6 +49,7 @@ public class Login extends AppCompatActivity {
             }
         });
     }
+    //파이어베이스에서 등록된 회원정보와 비교하여 로그인을 해주는 함수
     private void userLogin(){
         final String email = id.getText().toString().trim();
         final String password = pw.getText().toString().trim();
